@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import firebaseInstance from '../config/firebase';
 import Link from 'next/link';
 import styled from 'styled-components';
-import List from '../components/List';
+
 //let games = [];
 
 const GamesList = () => {
@@ -101,6 +101,9 @@ const GamesList = () => {
 			<h1>My Favorite Games</h1>
 			<Link href="/game/add">
 				<button>Add More</button>
+			</Link>
+			<Link href="/game/edit">
+				<button>Edit Game Library</button>
 			</Link>
 			<div>
 				<button onClick={showAllGames}>See All Games</button>
