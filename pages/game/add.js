@@ -6,9 +6,12 @@ function AddGame() {
 	const [ title, setTitle ] = useState(null);
 	const [ rating, setRating ] = useState(null);
 	const [ year, setYear ] = useState(null);
+	const [ developer, setDeveloper ] = useState(null);
+	const [ inputTxt, setInputTxt ] = useState('');
 
 	function handleTitleChange(e) {
 		setTitle(e.target.value);
+		setInputTxt(e.target.value);
 	}
 
 	function handleRatingChange(e) {
@@ -17,6 +20,10 @@ function AddGame() {
 
 	function handleYearChange(e) {
 		setYear(e.target.value);
+	}
+
+	function handleDeveloperChange(e) {
+		setDeveloper(e.target.value);
 	}
 
 	function handleSubmit(e) {
@@ -28,11 +35,13 @@ function AddGame() {
 			.set({
 				title: title,
 				rating: rating,
-				year: year
+				year: year,
+				developers: developer
 			})
 			.then(() => {
 				//should change this to show that it is sent in or cancel out if you want to stop.
-				console.log('added!');
+				//console.log('added!');
+				setInputTitle('');
 			})
 			.catch((error) => {
 				console.error(error);
@@ -49,6 +58,7 @@ function AddGame() {
 					inputType="text"
 					inputPlaceholder="game title"
 					labelText="title"
+					inputTxt={inputTxt}
 					inputChangeHandler={(e) => handleTitleChange(e)}
 				/>
 
@@ -66,6 +76,14 @@ function AddGame() {
 					inputType="number"
 					labelText="game's year"
 					inputChangeHandler={(e) => handleYearChange(e)}
+				/>
+
+				<InputBlock
+					inputName="developers"
+					inputId="developers"
+					inputType="text"
+					labelText="developed by"
+					inputChangeHandler={(e) => handleDeveloperChange(e)}
 				/>
 
 				<button type="submit">Submit</button>

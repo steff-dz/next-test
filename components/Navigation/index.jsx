@@ -15,6 +15,9 @@ const Navigation = () => {
 				<li>
 					<Link href="/about">About</Link>
 				</li>
+				<li>
+					<Link href="/gameslist">Game Library</Link>
+				</li>
 			</ul>
 		</NavBase>
 	);

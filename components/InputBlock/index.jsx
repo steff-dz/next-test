@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputBlock = ({ inputName, inputId, inputType, inputPlaceholder, labelText, inputChangeHandler }) => {
+const InputBlock = ({ inputName, inputId, inputType, inputPlaceholder, labelText, inputChangeHandler, inputTxt }) => {
 	return (
 		<React.Fragment>
 			<label htmlFor={inputId}>{labelText}</label>
@@ -9,6 +9,7 @@ const InputBlock = ({ inputName, inputId, inputType, inputPlaceholder, labelText
 				name={inputName}
 				id={inputId}
 				placeholder={inputPlaceholder}
+				value={inputTxt}
 				onChange={(e) => inputChangeHandler(e)}
 			/>
 		</React.Fragment>
