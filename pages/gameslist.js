@@ -20,8 +20,9 @@ const GamesList = () => {
 		[ displayGames ]
 	);
 
-	const showGames = async () => {
+	const showAllGames = async () => {
 		//setDisplayMode('all')
+		setDisplayGames([]);
 		let games = [];
 		try {
 			const gamesCollection = await firebaseInstance.firestore().collection('games');
@@ -50,6 +51,51 @@ const GamesList = () => {
 		}
 	}
 
+	const showNewerGames = async () => {
+		let games = [];
+		setDisplayGames([]);
+		try {
+			const gamesCollection = await firebaseInstance
+				.firestore()
+				.collection('games')
+				.where('year', '>=', '2000')
+				.get();
+
+			gamesCollection.forEach((el) => {
+				games.push({
+					id: el.id,
+					...el.data()
+				});
+			});
+
+			setDisplayGames(games);
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
+
+	const showBestGames = async () => {
+		let games = [];
+		setDisplayGames([]);
+		try {
+			const gamesCollection = await firebaseInstance
+				.firestore()
+				.collection('games')
+				.where('rating', '>=', 7)
+				.get();
+
+			gamesCollection.forEach((el) => {
+				games.push({
+					id: el.id,
+					...el.data()
+				});
+			});
+
+			setDisplayGames(games);
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
 	return (
 		<MainBase>
 			<h1>My Favorite Games</h1>
@@ -57,14 +103,18 @@ const GamesList = () => {
 				<button>Add More</button>
 			</Link>
 			<div>
-				<button onClick={showGames}>See All Games</button>
-				<button>See Games Before 2000</button>
-				<button>See Highest Rating Games</button>
+				<button onClick={showAllGames}>See All Games</button>
+				<button onClick={showNewerGames}>See Games Before 2000</button>
+				<button onClick={showBestGames}>See Highest Rating Games</button>
 			</div>
 			<ul>
 				{displayGames &&
 					displayGames.map((el) => {
-						return <li key={el.id}>{JSON.stringify(el.title)}</li>;
+						return (
+							<li key={el.id}>
+								{el.title} from: {el.year}, my rating: {el.rating}
+							</li>
+						);
 					})}
 			</ul>
 		</MainBase>
